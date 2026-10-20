@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
@@ -43,20 +44,23 @@ import edu.javeriana.rutafoto.ui.RutaFotoTypography
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+        )
         setContent {
-            MaterialTheme(typography = RutaFotoTypography, colorScheme = lightColorScheme(
-                primary = Color(0xFFA83B65), onPrimary = Color.White,
-                primaryContainer = Color(0xFFF9DEEA), onPrimaryContainer = Color(0xFF74304D),
-                secondary = Color(0xFFA83B65), onSecondary = Color.White,
-                secondaryContainer = Color(0xFFFCE4EE), onSecondaryContainer = Color(0xFF74304D),
-                tertiary = Color(0xFF8A526A), onTertiary = Color.White,
-                background = Color(0xFFFFF7FA), onBackground = Color(0xFF49303C),
-                surface = Color.White, onSurface = Color(0xFF49303C),
-                surfaceVariant = Color(0xFFFAEEF3), onSurfaceVariant = Color(0xFF755763),
-                surfaceContainer = Color(0xFFFFF0F6), surfaceContainerHighest = Color(0xFFF6E3EB),
-                surfaceContainerLow = Color.White, surfaceContainerHigh = Color(0xFFFAEEF3),
-                outline = Color(0xFFC49BAC), outlineVariant = Color(0xFFE8CCD8)
+            MaterialTheme(typography = RutaFotoTypography, colorScheme = darkColorScheme(
+                primary = Color(0xFFFF4FA0), onPrimary = Color(0xFF200C17),
+                primaryContainer = Color(0xFF53223D), onPrimaryContainer = Color(0xFFFFC2DF),
+                secondary = Color(0xFFFF4FA0), onSecondary = Color(0xFF200C17),
+                secondaryContainer = Color(0xFF452235), onSecondaryContainer = Color(0xFFFFB0D5),
+                tertiary = Color(0xFFF299C4), onTertiary = Color(0xFF301323),
+                background = Color.Black, onBackground = Color(0xFFF9F1F5),
+                surface = Color(0xFF171519), onSurface = Color(0xFFF9F1F5),
+                surfaceVariant = Color(0xFF282028), onSurfaceVariant = Color(0xFFD0B8C4),
+                surfaceContainer = Color(0xFF201B21), surfaceContainerHighest = Color(0xFF30232C),
+                surfaceContainerLow = Color(0xFF121014), surfaceContainerHigh = Color(0xFF282028),
+                outline = Color(0xFF99758A), outlineVariant = Color(0xFF5B3B4B)
             )) { RouteScreen() }
         }
     }

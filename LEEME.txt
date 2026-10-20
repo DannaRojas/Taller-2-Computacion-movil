@@ -262,3 +262,10 @@ ACTUALIZACION 1.5 - COLORES ROSADOS
 Fondo rosa muy claro, paneles blancos, botones rosa oscuro y bordes rosa
 suave. El icono de la app y la linea del recorrido usan la misma paleta.
 Se mantiene la tipografia serif y la distribucion sencilla de la 1.4.
+
+ACTUALIZACION 1.6 - NEGRO Y FUCSIA
+
+Fondo negro y paneles oscuros con botones fucsia intenso y texto claro.
+Nueva fuente sans-serif-condensed del dispositivo, sin descargar fuentes.
+Mapa Standard en iluminacion nocturna, sin barra de escala superpuesta.
+Se mantiene la estructura sencilla y los botones Iniciar y Borrar.

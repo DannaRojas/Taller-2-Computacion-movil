@@ -1,3 +1,15 @@
+ACTUALIZACION 1.6 - NEGRO Y FUCSIA - 20 DE OCTUBRE DE 2026
+
+assembleDebug y lintDebug correctos: 0 errores y 12 advertencias.
+APK version 1.6/versionCode 7. Fondo negro, paneles oscuros y fucsia intenso.
+Nueva letra sans-serif-condensed del sistema; no se agregaron dependencias.
+Mapa Standard con LightPresetValue.NIGHT y sin barra de escala.
+Revision visual en Pixel 10 Pro Fold abierto y plegado: mapa nocturno,
+camara, controles y textos visibles; barras del sistema con iconos claros.
+Capturas: validacion/negro-v1.6/.
+Token configurado en la sesion; no se incluye en el codigo ni en el APK.
+No se repitieron pruebas funcionales para estos cambios de presentacion.
+
 ACTUALIZACION 1.5 - PALETA ROSADA - 20 DE OCTUBRE DE 2026
 
 assembleDebug y lintDebug correctos: 0 errores y 12 advertencias.

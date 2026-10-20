@@ -29,6 +29,9 @@ import com.mapbox.maps.viewannotation.annotationAnchor
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import edu.javeriana.rutafoto.R
 import edu.javeriana.rutafoto.data.RoutePhoto
 import edu.javeriana.rutafoto.data.RouteViewModel
@@ -63,6 +66,9 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
         // Vista general mientras llega el primer GPS; evita mostrar sólo océano a zoom 15.
         setCameraOptions { zoom(2.0); pitch(0.0); bearing(0.0) }
     }
+    val mapStyle = rememberStandardStyleState {
+        configurationsState.lightPreset = LightPresetValue.NIGHT
+    }
     var centered by remember { mutableStateOf(false) }
     var clearDialog by remember { mutableStateOf(false) }
     val location = model.currentLocation
@@ -96,7 +102,9 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                 Box(Modifier.fillMaxWidth().weight(1f)) {
                     if (tokenReady) {
                         key(sdkToken) {
-                        MapboxMap(Modifier.fillMaxSize(), mapViewportState = viewport) {
+                        MapboxMap(Modifier.fillMaxSize(), mapViewportState = viewport,
+                            style = { MapboxStandardStyle(standardStyleState = mapStyle) },
+                            scaleBar = { }) {
                             DisposableMapEffect(sdkToken) { mapView ->
                                 val errors = mapView.mapboxMap.subscribeMapLoadingError { mapError = true }
                                 val loaded = mapView.mapboxMap.subscribeStyleLoaded { mapError = false }
@@ -104,7 +112,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             }
                             if (model.points.size >= 2) PolylineAnnotation(
                                 points = model.points.map { Point.fromLngLat(it.longitude, it.latitude) }
-                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFA83B65); lineWidth = 5.0 }
+                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFFF4FA0); lineWidth = 5.0 }
                             location?.let {
                                 Marker(point = Point.fromLngLat(it.longitude, it.latitude),
                                     text = "",
