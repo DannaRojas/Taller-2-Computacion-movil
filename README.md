@@ -105,3 +105,4 @@ La cabecera es un título sencillo; se quitaron el banner y los números de secc
 Fondo negro y paneles oscuros sin bordes. Los controles usan azul y verde intenso, con textos claros y mapa nocturno. La ubicación se indica en azul y el recorrido en verde.
 Con menos de 760 dp disponibles se apilan los paneles, con el mapa arriba.
 La fuente se define en `ui/RutaFotoTypography.kt`, sin añadir bibliotecas.
+# codigo mapbox : [TOKEN RETIRADO: configurar en mapbox.properties, no en Git]
