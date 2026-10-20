@@ -25,7 +25,6 @@ android {
         resValue("string", "mapbox_access_token", publicToken)
     }
     buildFeatures { compose = true; resValues = true }
-    // Comprimir las bibliotecas nativas reduce el tamaño del APK universal.
     packaging { jniLibs { useLegacyPackaging = true } }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -46,7 +45,6 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.6.0")
     implementation("androidx.camera:camera-compose:1.6.0")
     implementation("com.google.android.gms:play-services-location:21.4.0")
-    // 11.31.1 autorizada por el estudiante; 11.31.11 del enunciado no está publicada.
     implementation("com.mapbox.maps:android-ndk27:11.31.1")
     implementation("com.mapbox.extension:maps-compose-ndk27:11.31.1")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")

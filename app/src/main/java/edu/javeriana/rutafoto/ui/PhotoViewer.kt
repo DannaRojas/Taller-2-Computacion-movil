@@ -39,7 +39,6 @@ import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-// Compose: estado de escala/desplazamiento y gestos; sin librerías adicionales.
 @Composable
 fun PhotoViewer(photo: RoutePhoto, onClose: () -> Unit) {
     val resolver = LocalContext.current.contentResolver

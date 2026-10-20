@@ -39,7 +39,6 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-// Clase 7: Preview + SurfaceRequest + CameraXViewfinder; MediaStore para la galería.
 @Composable
 private fun CameraSurface(front: Boolean, onReady: (ImageCapture?) -> Unit,
                           onError: (Int) -> Unit, modifier: Modifier) {
@@ -90,7 +89,6 @@ private fun CameraSurface(front: Boolean, onReady: (ImageCapture?) -> Unit,
     }
     Box(modifier.background(Color(0xFF142D2A)), contentAlignment = Alignment.Center) {
         val request = surfaceRequest
-        // Mantener la cámara dentro de Compose al cambiar de pantalla en un plegable.
         if (request != null) CameraXViewfinder(surfaceRequest = request,
             implementationMode = ImplementationMode.EMBEDDED, modifier = Modifier.fillMaxSize())
         else Text(stringResource(R.string.camera_loading), color = Color.White)

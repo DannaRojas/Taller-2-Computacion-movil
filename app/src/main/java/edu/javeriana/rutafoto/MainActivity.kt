@@ -87,7 +87,6 @@ private fun rememberGpsEnabled(): Boolean {
     return enabled
 }
 
-// Clase 6: solicitud al iniciar y estados independientes para las dos regiones.
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun RouteScreen(model: RouteViewModel = viewModel()) {
@@ -137,7 +136,6 @@ private fun RouteScreen(model: RouteViewModel = viewModel()) {
                     }, onLocationSettings = { context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) },
                         onPhotoSelected = { selected = it }, modifier = modifier)
                 }
-                // Clases 2-4: Row/Column, pesos, restricciones y componentes reutilizables.
                 if (maxWidth >= 760.dp) Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     map(Modifier.weight(1.25f).fillMaxHeight())
                     camera(Modifier.weight(1f).fillMaxHeight())

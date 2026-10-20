@@ -10,10 +10,8 @@ import androidx.lifecycle.ViewModel
 
 data class RoutePhoto(val name: String, val uri: Uri, val latitude: Double, val longitude: Double)
 
-// Clase 5: el ViewModel conserva los datos cuando la tablet cambia de orientación.
-// No se almacena la Activity, la cámara ni vistas en este objeto.
+
 class RouteViewModel : ViewModel() {
-    // Configuración de sesión; no se incluye ningún token en el código entregado.
     var mapboxToken by mutableStateOf("")
     var currentLocation by mutableStateOf<Location?>(null)
         private set
@@ -55,7 +53,6 @@ class RouteViewModel : ViewModel() {
     fun beginCapture(): Int { capturing = true; return generation }
     fun finishCapture() { capturing = false }
     fun addPhoto(photo: RoutePhoto, captureGeneration: Int) {
-        // Una captura pendiente no puede volver a poblar una ruta que ya fue borrada.
         if (generation == captureGeneration) photos = photos + photo
     }
     fun clearRoute() {

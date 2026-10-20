@@ -18,7 +18,6 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 
-// Clase 8: FusedLocationProviderClient + LocationRequest + LocationCallback.
 @SuppressLint("MissingPermission")
 @Composable
 fun LocationUpdates(enabled: Boolean, onLocation: (Location) -> Unit, onError: () -> Unit) {

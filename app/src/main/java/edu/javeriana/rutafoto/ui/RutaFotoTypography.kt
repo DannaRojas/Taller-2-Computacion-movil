@@ -4,7 +4,6 @@ import android.graphics.Typeface
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily
 
-// Fuente del propio dispositivo, sin descargar archivos ni añadir bibliotecas.
 private val RouteFont = FontFamily(Typeface.create("sans-serif-condensed", Typeface.NORMAL))
 
 val RutaFotoTypography = Typography().let { base ->

@@ -37,7 +37,6 @@ import edu.javeriana.rutafoto.data.RoutePhoto
 import edu.javeriana.rutafoto.data.RouteViewModel
 import java.util.Locale
 
-// Clase 9: MapboxMap, cámara del mapa, Marker y PolylineAnnotation.
 @Composable
 @OptIn(MapboxExperimental::class)
 fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean,
@@ -63,7 +62,6 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
     }
     val tokenReady = sdkToken.isNotEmpty() && sdkToken == model.mapboxToken
     val viewport = rememberMapViewportState {
-        // Vista general mientras llega el primer GPS; evita mostrar sólo océano a zoom 15.
         setCameraOptions { zoom(2.0); pitch(0.0); bearing(0.0) }
     }
     val mapStyle = rememberStandardStyleState {
@@ -120,7 +118,6 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             }
                             model.photos.forEach { photo ->
                                 key(photo.name) {
-                                    // Bonus: personalización del mismo ViewAnnotation que utiliza Marker.
                                     ViewAnnotation(options = viewAnnotationOptions {
                                         geometry(Point.fromLngLat(photo.longitude, photo.latitude))
                                         annotationAnchor { anchor(ViewAnnotationAnchor.BOTTOM); allowOverlap(true) }
