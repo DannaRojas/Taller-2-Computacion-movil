@@ -1,3 +1,7 @@
+GUÍA ACTUAL DE LA VERSIÓN 1.7: consulta EXPLICACION_PROYECTO.txt para la
+revisión de requisitos, archivos, funciones y relación verificada con clase.
+El documento siguiente incluye también el historial de versiones anteriores.
+
 RUTAFOTO - TALLER 2 DE COMPUTACION MOVIL
 ======================================
 
@@ -17,7 +21,7 @@ El APK se entrega SIN ningún token incluido, según la preferencia del
 estudiante. Pulsa "Configurar Mapbox" en el mapa, introduce tu token público
 pk. y pulsa "Cargar mapa". No necesitas recompilar. El token permanece en
 memoria durante esta sesión y sobrevive a los giros; debes introducirlo de
-nuevo tras cerrar el proceso. El icono de llave permite cambiarlo.
+nuevo tras cerrar el proceso. El botón "Configurar mapa" permite cambiarlo.
 No se incorporó ninguna credencial del repositorio de clase ni del demo.
 
 Como alternativa para compilar con un token ya configurado:
@@ -76,8 +80,8 @@ se detiene cuando la Activity deja de estar en primer plano.
 MainActivity.kt
   Es el punto de entrada. Crea el tema Material, solicita los permisos con
   rememberMultiplePermissionsState y divide la pantalla con Row o Column.
-  A partir de 840 dp de ancho utiliza dos paneles lado a lado. En pantallas
-  más estrechas coloca cámara arriba y mapa abajo.
+  A partir de 760 dp de ancho utiliza mapa a la izquierda y cámara a la
+  derecha. En pantallas más estrechas coloca mapa arriba y cámara abajo.
 
 data/RouteViewModel.kt
   Mantiene ubicación actual, lista de posiciones, fotos y estado de registro.

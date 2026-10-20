@@ -70,7 +70,10 @@ no hace caminar al emulador. Para eso debes reproducir posiciones.
 
 Los ejemplos originales se entregaron en `ejemplos_clase-main.zip` y los PDF
 en `compu movil conetnido clases.zip`. No se publican sus copias en este repo.
-Consulta también [LEEME.txt](LEEME.txt) y [ESTADO_VALIDACION.txt](ESTADO_VALIDACION.txt).
+Consulta [EXPLICACION_PROYECTO.txt](EXPLICACION_PROYECTO.txt) para la revisión
+de requisitos, archivos y funciones, con la distinción entre material de
+clase y adaptaciones propias. También están [LEEME.txt](LEEME.txt) y
+[ESTADO_VALIDACION.txt](ESTADO_VALIDACION.txt).
 
 ## Versiones y compilación
 
