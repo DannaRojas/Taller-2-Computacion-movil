@@ -106,16 +106,10 @@ fun CameraPanel(model: RouteViewModel, permissionGranted: Boolean, locationGrant
     var front by rememberSaveable { mutableStateOf(false) }
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     var cameraError by remember { mutableStateOf<Int?>(null) }
-    Card(modifier, shape = RoundedCornerShape(20.dp),
+    OutlinedCard(modifier, shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
-                    Icon(Icons.Default.CameraAlt, null, Modifier.padding(8.dp).size(20.dp),
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer)
-                }
-                Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleMedium)
-            }
+            Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleLarge)
             if (!permissionGranted) {
                 Box(Modifier.weight(1f).fillMaxWidth()) { permissionContent() }
             } else {

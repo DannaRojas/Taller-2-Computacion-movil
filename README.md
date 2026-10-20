@@ -21,14 +21,14 @@ excluidos de Git. El SDK local se configura desde Android Studio.
 ## Simular el recorrido tú misma
 
 La simulación se controla desde el emulador. La aplicación registra las
-posiciones recibidas; pulsar **Iniciar recorrido** empieza el registro.
+posiciones recibidas; pulsar **Iniciar** empieza el registro.
 
 1. En la barra del emulador pulsa **⋮** para abrir **Extended Controls**.
 2. Entra en **Location**. Usa **Load GPX/KML** o la opción de importar una ruta,
    según la interfaz de tu emulador.
 3. Abre [simulacion/Recorrido-prueba.gpx](simulacion/Recorrido-prueba.gpx).
 4. Inicia la reproducción con **Play**. Espera la primera posición en RutaFoto.
-5. En RutaFoto pulsa **Iniciar recorrido** mientras se reproduce.
+5. En RutaFoto pulsa **Iniciar** mientras se reproduce.
 6. Verás aumentar los metros y dibujarse la línea. Toma fotos durante la marcha.
 7. **Pausar** en RutaFoto detiene el registro. El control de reproducción del
    emulador detiene el movimiento GPS. Puedes volver a reproducir la ruta.
@@ -92,8 +92,13 @@ La versión 1.2 se probó en Pixel 10 Pro Fold con seis pruebas en cada pantalla
 CameraX usa `ImplementationMode.EMBEDDED` para respetar el recorte al plegar.
 El APK y los archivos generados por Gradle están excluidos de Git.
 
-## Diseno propio — version 1.3
+## Interfaz sencilla — versión 1.4
 
-Paleta azul marino y naranja, fondo crema y cabecera con estado. El mapa
-queda a la izquierda como panel principal; camara y bitacora, a la derecha.
-Con menos de 760 dp disponibles se apilan, con el mapa arriba.
+Letra serif del dispositivo, títulos cortos y dos paneles: Recorrido y Cámara.
+El recorrido tiene botones con texto: Iniciar/Pausar/Continuar y Borrar.
+El mapa muestra la ubicación sin el rótulo grande que tapaba los marcadores.
+Las miniaturas del mapa son compactas y abren la foto con su nombre completo.
+La cabecera es un título sencillo; se quitaron el banner y los números de sección.
+Se conservan azul marino y naranja sobre un fondo claro.
+Con menos de 760 dp disponibles se apilan los paneles, con el mapa arriba.
+La fuente se define en `ui/RutaFotoTypography.kt`, sin añadir bibliotecas.

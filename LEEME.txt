@@ -247,3 +247,12 @@ el momento. En un ancho disponible de al menos 760 dp el mapa ocupa el
 panel izquierdo, mas amplio, y la camara con su bitacora el derecho.
 En pantallas estrechas el mapa se ubica arriba de la camara.
 Se conservan las funciones del taller y el token configurable por sesion.
+
+ACTUALIZACION 1.4 - INTERFAZ SENCILLA
+
+Fuente serif del sistema para los textos de la app. Titulos cortos:
+Recorrido, Camara y Fotos. Se quito la cabecera grande y la numeracion.
+Iniciar y Borrar aparecen juntos debajo del mapa; Borrar pide confirmacion.
+El marcador de ubicacion ya no muestra texto grande sobre las fotos.
+Las miniaturas del mapa son mas pequenas y muestran el nombre resumido;
+al abrirlas, el visor conserva el nombre completo.

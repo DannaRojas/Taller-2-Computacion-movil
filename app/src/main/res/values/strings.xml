@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RutaFoto</string>
-    <string name="app_subtitle">Explora. Captura. Recuerda.</string>
-    <string name="header_ready">EXPLORAR</string>
-    <string name="header_recording">EN RUTA</string>
-    <string name="camera_title">02 · Captura el momento</string>
-    <string name="map_title">01 · Explora tu ruta</string>
-    <string name="photos_title">Tu bitácora · %1$d fotos</string>
-    <string name="no_photos">Tus fotos aparecerán aquí al iniciar el recorrido.</string>
-    <string name="start">Iniciar recorrido</string>
+    <string name="app_subtitle">Fotos de tu recorrido</string>
+    <string name="camera_title">Cámara</string>
+    <string name="map_title">Recorrido</string>
+    <string name="map_settings">Configurar mapa</string>
+    <string name="photos_title">Fotos · %1$d</string>
+    <string name="no_photos">Aquí aparecerán tus fotos.</string>
+    <string name="start">Iniciar</string>
     <string name="pause">Pausar</string>
     <string name="resume">Continuar</string>
-    <string name="clear">Borrar recorrido</string>
+    <string name="clear">Borrar</string>
     <string name="clear_title">¿Borrar este recorrido?</string>
     <string name="clear_message">Se quitarán la ruta, los marcadores y las fotos de esta lista. Las fotos seguirán guardadas en la galería.</string>
     <string name="cancel">Cancelar</string>
@@ -34,7 +33,7 @@
     <string name="route_paused">Recorrido pausado</string>
     <string name="route_ready">Listo para explorar</string>
     <string name="route_summary">Fotos: %1$d · %2$s m</string>
-    <string name="capture_hint">Inicia el recorrido para tomar fotos geolocalizadas.</string>
+    <string name="capture_hint">Pulsa Iniciar para tomar fotos.</string>
     <string name="stale_location">Espera una ubicación reciente antes de tomar la foto.</string>
     <string name="saved">Foto guardada en la galería.</string>
     <string name="capture_error">No se pudo guardar la foto. Verifica el espacio disponible e inténtalo de nuevo.</string>

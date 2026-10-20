@@ -3,11 +3,9 @@ package edu.javeriana.rutafoto.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
@@ -16,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.common.MapboxOptions
@@ -73,27 +72,22 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
             centered = true
         }
     }
-    Card(modifier, shape = RoundedCornerShape(20.dp),
+    OutlinedCard(modifier, shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
-        Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(Modifier.fillMaxSize().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.map_title), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.map_title), style = MaterialTheme.typography.titleLarge)
                     Text(stringResource(when {
                         model.recording -> R.string.route_active
                         model.started -> R.string.route_paused
                         else -> R.string.route_ready
                     }), style = MaterialTheme.typography.bodySmall)
                 }
-                Row {
-                IconButton(onClick = { draftToken = model.mapboxToken; tokenDialog = true }) {
-                    Icon(Icons.Default.Key, stringResource(R.string.configure_mapbox))
-                }
-                FilledTonalIconButton(onClick = { clearDialog = true },
-                    enabled = !model.capturing && (model.started || model.photos.isNotEmpty())) {
-                    Icon(Icons.Default.DeleteOutline, stringResource(R.string.clear))
-                }
+                if (permissionGranted && tokenReady) TextButton(
+                    onClick = { draftToken = model.mapboxToken; tokenDialog = true }) {
+                    Text(stringResource(R.string.map_settings))
                 }
             }
             if (!permissionGranted) {
@@ -113,7 +107,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             ) { lineColor = androidx.compose.ui.graphics.Color(0xFFB94B1A); lineWidth = 5.0 }
                             location?.let {
                                 Marker(point = Point.fromLngLat(it.longitude, it.latitude),
-                                    text = stringResource(R.string.center_map),
+                                    text = "",
                                     color = MaterialTheme.colorScheme.primary)
                             }
                             model.photos.forEach { photo ->
@@ -123,12 +117,12 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                                         geometry(Point.fromLngLat(photo.longitude, photo.latitude))
                                         annotationAnchor { anchor(ViewAnnotationAnchor.BOTTOM); allowOverlap(true) }
                                     }) {
-                                        Card(onClick = { onPhotoSelected(photo) }, modifier = Modifier.width(104.dp),
+                                        Card(onClick = { onPhotoSelected(photo) }, modifier = Modifier.width(96.dp),
                                             shape = RoundedCornerShape(10.dp),
                                             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)) {
-                                            PhotoThumbnail(photo.uri, photo.name, Modifier.fillMaxWidth().height(64.dp))
-                                            Text(photo.name, Modifier.padding(5.dp), maxLines = 2,
-                                                style = MaterialTheme.typography.labelSmall)
+                                            PhotoThumbnail(photo.uri, photo.name, Modifier.fillMaxWidth().height(48.dp))
+                                            Text(photo.name, Modifier.padding(4.dp), maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelSmall)
                                         }
                                     }
                                 }
@@ -188,13 +182,19 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                 if (!precise) Text(stringResource(R.string.approximate), style = MaterialTheme.typography.bodySmall)
                 Text(stringResource(R.string.route_summary, model.photos.size,
                     String.format(Locale.getDefault(), "%.0f", model.distanceMeters)), style = MaterialTheme.typography.labelLarge)
-                Button(onClick = { model.toggleRecording() }, modifier = Modifier.fillMaxWidth(),
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = { model.toggleRecording() }, modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary),
                     enabled = gpsEnabled && model.freshLocation() != null && !model.capturing) {
                     Icon(if (model.recording) Icons.Default.Pause else Icons.Default.PlayArrow, null)
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(if (model.recording) R.string.pause else if (model.started) R.string.resume else R.string.start))
+                }
+                OutlinedButton(onClick = { clearDialog = true },
+                    enabled = !model.capturing && (model.started || model.photos.isNotEmpty())) {
+                    Text(stringResource(R.string.clear))
+                }
                 }
             }
         }
