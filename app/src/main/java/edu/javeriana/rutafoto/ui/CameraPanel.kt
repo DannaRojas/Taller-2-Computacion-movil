@@ -106,9 +106,16 @@ fun CameraPanel(model: RouteViewModel, permissionGranted: Boolean, locationGrant
     var front by rememberSaveable { mutableStateOf(false) }
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     var cameraError by remember { mutableStateOf<Int?>(null) }
-    Card(modifier, shape = RoundedCornerShape(24.dp)) {
+    Card(modifier, shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleLarge)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+                    Icon(Icons.Default.CameraAlt, null, Modifier.padding(8.dp).size(20.dp),
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                }
+                Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleMedium)
+            }
             if (!permissionGranted) {
                 Box(Modifier.weight(1f).fillMaxWidth()) { permissionContent() }
             } else {
@@ -121,7 +128,10 @@ fun CameraPanel(model: RouteViewModel, permissionGranted: Boolean, locationGrant
                         }
                     }
                     FilledIconButton(onClick = { front = !front; cameraError = null },
-                        enabled = !model.capturing, modifier = Modifier.align(Alignment.TopEnd).padding(12.dp)) {
+                        enabled = !model.capturing, modifier = Modifier.align(Alignment.TopEnd).padding(12.dp),
+                        colors = IconButtonDefaults.filledIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary)) {
                         Icon(Icons.Default.Cameraswitch, stringResource(R.string.switch_camera))
                     }
                     Button(
@@ -162,7 +172,9 @@ fun CameraPanel(model: RouteViewModel, permissionGranted: Boolean, locationGrant
                                     onMessage(R.string.capture_error)
                                 }
                             }
-                        }, modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)
+                        }, modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary)
                     ) {
                         if (model.capturing) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                         else Icon(Icons.Default.CameraAlt, null)

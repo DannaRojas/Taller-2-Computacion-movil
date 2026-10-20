@@ -238,3 +238,12 @@ Para plegar/desplegar: usa el boton de postura de la barra del emulador.
 En Android Studio selecciona Pixel 10 Pro Fold junto al boton Run.
 El demo esta instalado en este emulador como Taller2; RutaFoto es la app
 del proyecto. Cada emulador mantiene sus propias apps y datos.
+
+ACTUALIZACION 1.3 - DISENO PROPIO
+
+Nueva paleta azul marino, naranja y fondo crema. Cabecera de RutaFoto
+con estado del recorrido y secciones numeradas: Explora tu ruta y Captura
+el momento. En un ancho disponible de al menos 760 dp el mapa ocupa el
+panel izquierdo, mas amplio, y la camara con su bitacora el derecho.
+En pantallas estrechas el mapa se ubica arriba de la camara.
+Se conservan las funciones del taller y el token configurable por sesion.

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RutaFoto</string>
-    <string name="app_subtitle">Tu recorrido, foto a foto</string>
-    <string name="camera_title">Cámara</string>
-    <string name="map_title">Mi recorrido</string>
-    <string name="photos_title">Fotos del recorrido · %1$d</string>
+    <string name="app_subtitle">Explora. Captura. Recuerda.</string>
+    <string name="header_ready">EXPLORAR</string>
+    <string name="header_recording">EN RUTA</string>
+    <string name="camera_title">02 · Captura el momento</string>
+    <string name="map_title">01 · Explora tu ruta</string>
+    <string name="photos_title">Tu bitácora · %1$d fotos</string>
     <string name="no_photos">Tus fotos aparecerán aquí al iniciar el recorrido.</string>
     <string name="start">Iniciar recorrido</string>
     <string name="pause">Pausar</string>

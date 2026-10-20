@@ -91,3 +91,9 @@ Con el JDK y SDK configurados también puedes ejecutar:
 La versión 1.2 se probó en Pixel 10 Pro Fold con seis pruebas en cada pantalla.
 CameraX usa `ImplementationMode.EMBEDDED` para respetar el recorte al plegar.
 El APK y los archivos generados por Gradle están excluidos de Git.
+
+## Diseno propio — version 1.3
+
+Paleta azul marino y naranja, fondo crema y cabecera con estado. El mapa
+queda a la izquierda como panel principal; camara y bitacora, a la derecha.
+Con menos de 760 dp disponibles se apilan, con el mapa arriba.

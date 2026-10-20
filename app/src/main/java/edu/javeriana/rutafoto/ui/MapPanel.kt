@@ -73,12 +73,13 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
             centered = true
         }
     }
-    Card(modifier, shape = RoundedCornerShape(24.dp)) {
+    Card(modifier, shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically) {
-                Column {
-                    Text(stringResource(R.string.map_title), style = MaterialTheme.typography.titleLarge)
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.map_title), style = MaterialTheme.typography.titleMedium)
                     Text(stringResource(when {
                         model.recording -> R.string.route_active
                         model.started -> R.string.route_paused
@@ -109,7 +110,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             }
                             if (model.points.size >= 2) PolylineAnnotation(
                                 points = model.points.map { Point.fromLngLat(it.longitude, it.latitude) }
-                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFF167D73); lineWidth = 5.0 }
+                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFB94B1A); lineWidth = 5.0 }
                             location?.let {
                                 Marker(point = Point.fromLngLat(it.longitude, it.latitude),
                                     text = stringResource(R.string.center_map),
@@ -188,6 +189,8 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                 Text(stringResource(R.string.route_summary, model.photos.size,
                     String.format(Locale.getDefault(), "%.0f", model.distanceMeters)), style = MaterialTheme.typography.labelLarge)
                 Button(onClick = { model.toggleRecording() }, modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onSecondary),
                     enabled = gpsEnabled && model.freshLocation() != null && !model.capturing) {
                     Icon(if (model.recording) Icons.Default.Pause else Icons.Default.PlayArrow, null)
                     Spacer(Modifier.width(8.dp))

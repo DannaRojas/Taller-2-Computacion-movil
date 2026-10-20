@@ -14,6 +14,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Route
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -44,10 +48,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme(colorScheme = lightColorScheme(
-                primary = Color(0xFF167D73), onPrimary = Color.White,
-                primaryContainer = Color(0xFFD3F3E9), secondaryContainer = Color(0xFFD3F3E9),
-                background = Color(0xFFF0F5F2), surface = Color.White,
-                surfaceVariant = Color(0xFFE5EDE8), onSurface = Color(0xFF142D2A)
+                primary = Color(0xFF172D48), onPrimary = Color.White,
+                primaryContainer = Color(0xFFE4EDF8), onPrimaryContainer = Color(0xFF172D48),
+                secondary = Color(0xFFB94B1A), onSecondary = Color.White,
+                secondaryContainer = Color(0xFFFFE8D8), onSecondaryContainer = Color(0xFF71300E),
+                tertiary = Color(0xFF286977), onTertiary = Color.White,
+                background = Color(0xFFF6F2EB), onBackground = Color(0xFF172D48),
+                surface = Color.White, onSurface = Color(0xFF172D48),
+                surfaceVariant = Color(0xFFEDF1F6), onSurfaceVariant = Color(0xFF526176),
+                surfaceContainer = Color(0xFFF0F3F7), surfaceContainerHighest = Color(0xFFE6ECF3),
+                outline = Color(0xFF9BAABA), outlineVariant = Color(0xFFDCE3EC)
             )) { RouteScreen() }
         }
     }
@@ -103,11 +113,27 @@ private fun RouteScreen(model: RouteViewModel = viewModel()) {
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary)
-                Text(stringResource(R.string.app_subtitle), style = MaterialTheme.typography.bodySmall)
+            Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary) {
+                Row(Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Surface(shape = RoundedCornerShape(12.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+                        Icon(Icons.Default.Route, null, Modifier.padding(12.dp).size(28.dp),
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.app_subtitle), style = MaterialTheme.typography.bodySmall)
+                    }
+                    Surface(shape = RoundedCornerShape(50), color = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
+                        Text(stringResource(if (model.recording) R.string.header_recording else R.string.header_ready),
+                            Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.labelMedium)
+                    }
+                }
             }
             BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)) {
                 val camera: @Composable (Modifier) -> Unit = { modifier ->
@@ -125,12 +151,12 @@ private fun RouteScreen(model: RouteViewModel = viewModel()) {
                         onPhotoSelected = { selected = it }, modifier = modifier)
                 }
                 // Clases 2-4: Row/Column, pesos, restricciones y componentes reutilizables.
-                if (maxWidth >= 840.dp) Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                if (maxWidth >= 760.dp) Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    map(Modifier.weight(1.25f).fillMaxHeight())
                     camera(Modifier.weight(1f).fillMaxHeight())
-                    map(Modifier.weight(1.15f).fillMaxHeight())
                 } else Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    camera(Modifier.weight(1.1f).fillMaxWidth())
                     map(Modifier.weight(1f).fillMaxWidth())
+                    camera(Modifier.weight(1.15f).fillMaxWidth())
                 }
             }
         }
