@@ -1,0 +1,240 @@
+RUTAFOTO - TALLER 2 DE COMPUTACION MOVIL
+======================================
+
+Proyecto Android para tablets, desarrollado en Kotlin y Jetpack Compose.
+Los nombres de fotos y los mensajes de la interfaz se muestran en español.
+
+1. ABRIR Y CONFIGURAR
+
+Abre la carpeta RutaFoto desde Android Studio como proyecto Gradle.
+Requisitos de compilación: JDK 21, Android SDK Platform 37, acceso a Internet.
+El Gradle Wrapper incluido descarga Gradle 9.6.0 automáticamente.
+La aplicación se instala en Android 10 (API 29) o superior.
+Se eligió API 29 como mínimo para guardar fotos directamente con MediaStore
+sin solicitar permisos adicionales de almacenamiento.
+
+El APK se entrega SIN ningún token incluido, según la preferencia del
+estudiante. Pulsa "Configurar Mapbox" en el mapa, introduce tu token público
+pk. y pulsa "Cargar mapa". No necesitas recompilar. El token permanece en
+memoria durante esta sesión y sobrevive a los giros; debes introducirlo de
+nuevo tras cerrar el proceso. El icono de llave permite cambiarlo.
+No se incorporó ninguna credencial del repositorio de clase ni del demo.
+
+Como alternativa para compilar con un token ya configurado:
+copia mapbox.properties.example como mapbox.properties en la raíz del
+proyecto. Sustituye pk.REEMPLAZAR por el token PUBLICO de tu cuenta Mapbox.
+No uses un token secreto sk. El token público quedará dentro del APK,
+como recurso mapbox_access_token, porque el SDK lo necesita en ejecución.
+También se puede configurar la variable de entorno MAPBOX_ACCESS_TOKEN.
+Nunca se incluye un token ajeno tomado del APK de demostración.
+
+Si no hay token, se muestra una explicación y un botón de configuración.
+Para usar el mapa completo hace falta un token válido y conexión a Internet.
+Para localizarse hace falta Google Play Services y ubicación activada.
+
+En Windows, compila desde esta carpeta:
+    .\gradlew.bat assembleDebug
+
+En macOS o Linux:
+    chmod +x gradlew
+    ./gradlew assembleDebug
+
+El APK se genera en:
+    app/build/outputs/apk/debug/app-debug.apk
+
+local.properties contiene únicamente la ruta local del SDK y NO se entrega.
+Android Studio genera ese archivo para cada equipo al abrir el proyecto.
+
+2. COMO USAR LA APLICACION
+
+- Al iniciar, acepta los permisos de cámara y ubicación.
+- Configura tu token público en "Configurar Mapbox" para ver la cartografía.
+- Si niegas cámara, su región explica el motivo y permite solicitarla otra vez.
+- Si niegas ubicación, su región muestra su propio mensaje de permiso.
+- "Abrir ajustes" permite recuperar permisos rechazados permanentemente.
+- Espera una ubicación reciente y pulsa "Iniciar recorrido".
+- Desplázate: las ubicaciones se conectan con una línea en el mapa.
+- Pulsa "Tomar foto". La imagen se guarda en Pictures/RutaFoto de la galería.
+- Se añade a la lista horizontal debajo de la cámara y aparece un marcador
+  con miniatura y nombre de archivo en las coordenadas de la captura (bonus).
+- Toca una miniatura de la lista o del mapa para verla más grande.
+- El icono de cambio de cámara alterna entre frontal y trasera.
+- El botón de ubicación centra el mapa en tu posición actual.
+- Puedes pausar y continuar el registro del recorrido.
+- "Borrar recorrido" pide confirmar y limpia la línea, las fotos de la lista
+  y los marcadores de fotos. Los archivos siguen en la galería.
+
+La foto usa una copia de la ubicación al pulsar el obturador. Si tiene más
+de 15 segundos, se solicita esperar una ubicación reciente. No se permite
+fotografiar fuera de un recorrido activo o sin ubicación autorizada.
+Una ubicación aproximada es aceptada y se informa su menor precisión.
+No se solicitan permisos de ubicación en segundo plano: la suscripción
+se detiene cuando la Activity deja de estar en primer plano.
+
+3. EXPLICACION PARA SUSTENTAR EL TALLER
+
+MainActivity.kt
+  Es el punto de entrada. Crea el tema Material, solicita los permisos con
+  rememberMultiplePermissionsState y divide la pantalla con Row o Column.
+  A partir de 840 dp de ancho utiliza dos paneles lado a lado. En pantallas
+  más estrechas coloca cámara arriba y mapa abajo.
+
+data/RouteViewModel.kt
+  Mantiene ubicación actual, lista de posiciones, fotos y estado de registro.
+  mutableStateOf notifica a Compose cuando cambia cada dato. El ViewModel
+  conserva el recorrido al girar la tablet. clearRoute vacía las listas;
+  por eso Compose retira automáticamente las miniaturas y anotaciones.
+  Un identificador de generación evita que una captura antigua repueble un
+  recorrido borrado. El recorrido de esta sesión no se persiste en disco:
+  sobrevive a rotación, pero termina si Android mata el proceso o se cierra
+  la aplicación. Las imágenes sí permanecen guardadas en la galería.
+
+data/LocationUpdates.kt
+  Obtiene FusedLocationProviderClient y registra LocationCallback mediante
+  LocationRequest. Emplea precisión alta y granularidad según el permiso.
+  Se suscribe en ON_RESUME y se retira en ON_PAUSE o al perder permisos.
+  La posición se actualiza incluso antes de iniciar el registro. Sólo se
+  añade a la ruta cuando recording es true y hay al menos 3 m de movimiento.
+
+ui/CameraPanel.kt
+  ProcessCameraProvider enlaza Preview e ImageCapture al ciclo de vida.
+  Preview entrega SurfaceRequest y CameraXViewfinder muestra la cámara.
+  El selector alterna DEFAULT_FRONT_CAMERA y DEFAULT_BACK_CAMERA.
+  ImageCapture.takePicture escribe en MediaStore usando ContentValues.
+  Sólo en onImageSaved se añade la foto con su URI, nombre y coordenadas.
+  Si falla la captura se informa el error y no se añade un marcador falso.
+
+ui/PhotoThumbnail.kt
+  ContentResolver.loadThumbnail carga una versión pequeña de cada URI en
+  Dispatchers.IO, para evitar leer imágenes grandes en el hilo de la UI.
+  No necesita Coil, Glide ni otra librería de imágenes.
+
+ui/MapPanel.kt
+  MapboxMap y rememberMapViewportState muestran y centran la posición.
+  PolylineAnnotation conecta los puntos registrados.
+  Marker indica la ubicación actual. Para el bonus se personaliza su
+  componente base ViewAnnotation con una tarjeta que contiene la foto y
+  el nombre de archivo. Cada marcador de foto tiene su propio onClick.
+  Se conservan los controles de atribución y logotipo predeterminados.
+
+res/values/strings.xml
+  Centraliza los textos de interfaz mediante stringResource.
+res/drawable/ic_app.xml
+  Icono vectorial de la aplicación, sin imágenes externas.
+res/values/themes.xml
+  Tema de arranque de Android; el tema Compose se configura en MainActivity.
+
+4. RELACION CON EL MATERIAL ENTREGADO
+
+Fuentes pedagógicas utilizadas: los PDF del archivo
+"compu movil conetnido clases.zip", las imágenes adjuntas y las características
+de paquete/permisos del APK taller2_demo.apk, además de los ejemplos del
+archivo ejemplos_clase-main.zip entregado por el estudiante.
+No se presenta el APK recibido
+como si fuera el nuevo ejecutable, ni se reutilizan sus credenciales.
+
+M_CL_02, M_CL_03 y M_CL_04: Kotlin, componentes, layouts y recursos Compose.
+M_CL_05: separación UI/datos, estados y ViewModel ante cambios de configuración.
+M_CL_06, páginas 7-10: permisos en Manifest y Accompanist.
+M_CL_07, páginas 15-18: CameraX, SurfaceRequest, CameraXViewfinder,
+    ImageCapture, ContentValues y guardado con MediaStore.
+M_CL_08, páginas 7-11: Play Services Location, LocationRequest,
+    LocationCallback y retiro de suscripción al pausar.
+M_CL_09, páginas 7-13: configuración Mapbox, MapboxMap,
+    rememberMapViewportState, Marker, PolylineAnnotation y estilos.
+
+El bonus adapta el componente ViewAnnotation usado por Marker en la propia
+librería Mapbox. Se inspeccionaron las firmas de la dependencia para hacer
+compatible la composición, sin usar código de otros proyectos o tutoriales.
+Las versiones de librerías se toman del enunciado cuando están disponibles.
+
+Ejemplos de código contrastados del repositorio de clase:
+- 06-Permisos/Base/.../ui/screens/CameraScreen.kt y MapScreen.kt:
+  estado y solicitud de permisos independientes con Accompanist.
+- 07-Camara/CamApp/.../ui/components/CameraPreviewContent.kt y
+  .../viewmodels/CameraPreviewViewModel.kt: SurfaceRequest, CameraXViewfinder,
+  selección de lente, enlace al ciclo de vida y takePicture.
+- 09-Mapas/maps/.../viewmodels/LocationViewModel.kt: LocationRequest,
+  LocationCallback y registro de una ruta como lista de ubicaciones.
+- 09-Mapas/maps/.../ui/components/MapComponent.kt: MapboxMap,
+  rememberMapViewportState, marcadores, polilínea y centrado.
+- 09-Mapas/maps/gradle/libs.versions.toml confirma Mapbox 11.31.1.
+
+Versiones del proyecto:
+  CameraX: 1.6.0
+  Mapbox Android y Compose NDK27: 11.31.1
+  Accompanist Permissions: 0.37.3
+  Play Services Location: 21.4.0
+La versión 11.31.11 del enunciado no está publicada; el estudiante autorizó
+usar 11.31.1, que también es la versión del repositorio recibido.
+
+Pruebas instrumentadas en app/src/androidTest:
+RouteStateTest comprueba inicio con ubicación reciente, registro y pausa,
+borrado y capturas tardías de un recorrido borrado. Para ejecutarlas,
+conecta un emulador o tablet con depuración USB y ejecuta:
+    .\gradlew.bat connectedDebugAndroidTest
+Para compilar y revisar Android Lint:
+    .\gradlew.bat assembleDebug lintDebug
+Consulta ESTADO_VALIDACION.txt para los resultados y sus límites.
+
+5. PRUEBAS MANUALES PARA LA ENTREGA
+
+1) Inicia desde instalación limpia y rechaza ambos permisos: verifica que
+   cada panel tenga su mensaje; concede luego cada permiso por separado.
+2) Rechaza permanentemente y recupéralos desde "Abrir ajustes".
+3) Concede ubicación aproximada: verifica el aviso de menor precisión.
+4) Activa GPS y espera una ubicación. Inicia recorrido, simula o camina
+   varias posiciones y verifica la línea. Pausa y continúa el registro.
+5) Captura con cámara trasera y frontal. Comprueba que las fotos estén en
+   galería, lista horizontal y mapa, con nombres coincidentes.
+6) Toca un marcador de foto y una miniatura de la lista para ampliar.
+7) Gira entre retrato y paisaje: la ruta y las fotos deben conservarse.
+8) Borra y confirma: desaparecen línea, miniaturas y marcadores de fotos;
+   comprueba que las imágenes sigan en la galería.
+9) Desactiva ubicación durante el registro: se pausa y muestra el aviso.
+10) Envía la app al fondo y vuelve: no debe quedar otra suscripción GPS
+    ni una cámara duplicada. Repite con el permiso revocado en ajustes.
+
+Usa una tablet real con Google Play Services para la validación final.
+En un emulador, habilita sus cámaras y envía coordenadas desde los controles
+de ubicación; un emulador sin Google Play Services no ofrece esta localización.
+
+ACTUALIZACION 1.1 - ZOOM Y PRUEBA DE RECORRIDO
+
+El mapa incorpora botones + y - junto al boton para centrar la ubicacion.
+Al tocar una miniatura o marcador, se abre la foto completa (decodificada
+hasta 3072 px por lado mayor para limitar memoria). El visor permite
+zoom de 100 a 500 %, botones +/-, doble toque, pellizco y desplazamiento.
+El boton de restablecer devuelve la foto completa al 100 %.
+Estos controles son una ampliacion solicitada durante la revision.
+PhotoViewerTest comprueba botones, limites, restablecimiento y doble toque.
+Espresso 3.7.0 se declara explicitamente solo para pruebas; corrige la
+reflexion de InputManager incompatible con Android 17. Referencia oficial
+consultada para esta correccion de la herramienta de pruebas:
+https://developer.android.com/jetpack/androidx/releases/test#espresso-3.7.0
+La implementacion funcional conserva las bibliotecas del taller.
+
+En entrega/Recorrido-prueba.gpx hay coordenadas sinteticas para importar
+en los controles Location del emulador. Consulta Como-probar.txt.
+El emulador no avanza automaticamente: pulsa Iniciar recorrido y reproduce
+el GPX o envia nuevas posiciones. En una tablet real debes desplazarte.
+El Pixel Tablet de esta computadora requirio habilitar hw.gps=yes.
+
+ACTUALIZACION 1.2 - PIXEL 10 PRO FOLD
+
+Se creo el perfil oficial Pixel 10 Pro Fold en Device Manager, con la
+imagen Android 17/API 37.2 y Google Play ya instalada. Se probo pantalla
+exterior 1080 x 2364 y pantalla interior, con conservacion de ruta y foto.
+El ancho disponible determina paneles verticales o laterales.
+
+Se detecto que la superficie externa de CameraX podia quedar superpuesta
+al mapa al cambiar entre las pantallas del plegable. CameraXViewfinder
+ahora usa ImplementationMode.EMBEDDED de la misma biblioteca CameraX 1.6.0.
+El modo integra la vista previa en Compose y respeta el recorte del panel.
+No se agregaron dependencias de produccion. La API se comprobo directamente
+en los sources.jar de CameraX 1.6.0 descargados por Gradle.
+
+Para plegar/desplegar: usa el boton de postura de la barra del emulador.
+En Android Studio selecciona Pixel 10 Pro Fold junto al boton Run.
+El demo esta instalado en este emulador como Taller2; RutaFoto es la app
+del proyecto. Cada emulador mantiene sus propias apps y datos.

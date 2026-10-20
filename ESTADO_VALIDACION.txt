@@ -1,0 +1,111 @@
+ACTUALIZACION 1.2 - PIXEL 10 PRO FOLD - 20 DE OCTUBRE DE 2026
+
+assembleDebug y lintDebug: correctos, 0 errores de lint, 12 advertencias.
+APK version 1.2/versionCode 3, firma comprobada con apksigner.
+Pruebas AndroidJUnitRunner version 1.2: 6 abiertas y 6 plegadas, todas OK.
+Se detecto superposicion de la vista previa al desplegar la version 1.1.
+La version 1.2 usa CameraX ImplementationMode.EMBEDDED para integrarla
+con el recorte y las transformaciones de Compose.
+
+En la prueba manual de 1.1, el mapa cargo con token introducido por el
+usuario; camara, miniatura y marcador fotografico visibles; GPS simulado
+registro 65 m. Al desplegar, foto y recorrido se conservaron.
+Version 1.2 pendiente de comprobacion manual final con mapa del usuario.
+Informes: entrega/validacion/pixel-10-pro-fold/.
+
+Los resultados siguientes son historicos de versiones anteriores:
+
+ACTUALIZACION 1.1 - 19 DE OCTUBRE DE 2026 (BOGOTA)
+
+assembleDebug: correcto. Version 1.1, versionCode 2.
+lintDebug final: correcto, 0 errores y 12 advertencias.
+Firma del APK 1.1 verificada con apksigner.
+Pruebas directas AndroidJUnitRunner: 6 pruebas, 0 fallos.
+- Las cuatro pruebas anteriores de RouteStateTest.
+- Botones de foto, limite 100-500 % y restablecimiento.
+- Doble toque: 100 -> 250 -> 100 %.
+Entorno: Pixel Tablet, Android 17/API 37.2, Google Play Services.
+
+El primer intento fallo por Espresso 3.5.0 transitivo, incompatible con
+InputManager de Android 17. Se agrego Espresso 3.7.0 solo a androidTest.
+El intento inicial de connectedDebugAndroidTest tambien fallo al producir
+el informe de Gradle. El resultado final se obtuvo directamente con:
+adb shell am instrument -w -r edu.javeriana.rutafoto.test/androidx.test.runner.AndroidJUnitRunner
+Salida completa: entrega/validacion/zoom-instrumentation.txt.
+
+Mapa: botones +/- compilados. No se verifico visualmente el cambio de
+escala sobre cartografia con un token real en esta actualizacion.
+Fotos: botones y doble toque comprobados en interfaz con imagen sintetica.
+Pellizco y desplazamiento implementados; pendientes de prueba manual tactil.
+GPS del Pixel Tablet: habilitado hw.gps=yes; envio de posicion confirmado.
+Ruta GPX sintetica entregada; reproduccion manual pendiente del usuario.
+La app actualizada se abrio y solicita permisos nuevamente tras las pruebas.
+El token permanece configurable, sin incluir uno en fuentes o APK.
+APK del profesor: instalado como Taller2, se abrio hasta el permiso de camara;
+no se verifico su funcionamiento despues de conceder los permisos.
+
+Los resultados siguientes corresponden a la version anterior:
+
+VALIDACION DE RUTAFOTO - 18 DE OCTUBRE DE 2026 (BOGOTA)
+
+RESULTADOS
+assembleDebug: CORRECTO. Se generó el nuevo app-debug.apk de RutaFoto.
+lintDebug: CORRECTO. 0 errores y 11 advertencias de mantenimiento
+(actualizaciones disponibles, copia de seguridad y sugerencias KTX).
+connectedDebugAndroidTest: CORRECTO. 4 pruebas, 0 fallos, 0 errores.
+Firma del APK: verificada con apksigner, certificado Android Debug.
+
+Entorno: JDK 21, Gradle 9.6.0, Android SDK 37, emulador Android 17/API 37
+con Google Play Services, pantalla 1280 x 800 a 160 dpi.
+No se ejecutó en una tablet física.
+
+PRUEBAS INSTRUMENTADAS
+1. No iniciar sin posición o con una posición de 60 segundos.
+   Sí iniciar con una posición reciente.
+2. Registrar sólo mientras el recorrido está activo, filtrar posiciones
+   inmóviles y actualizar la posición actual durante una pausa.
+3. Borrar posiciones y fotos sin perder la posición actual.
+4. Ignorar una captura pendiente de un recorrido borrado.
+
+REVISION DE LA INTERFAZ EN EL EMULADOR
+- Solicitud de permisos al iniciar desde instalación limpia.
+- Denegación de ambos permisos: mensaje separado en cada región.
+- Cámara autorizada y ubicación rechazada: vista previa activa y mensaje
+  de permiso en la región del mapa.
+- Permisos concedidos y coordenadas enviadas al GPS del emulador.
+- Inicio de recorrido y cambio entre cámaras trasera y frontal.
+- Dos capturas con CameraX: ambas en la lista horizontal y en MediaStore,
+  bajo Pictures/RutaFoto/.
+- Movimiento GPS simulado de aproximadamente 45 m reflejado en el contador.
+- Giro a 800 x 1280: conserva 2 fotos y recorrido; el diseño cambia de
+  paneles laterales a paneles verticales.
+- Formulario para introducir un token público de Mapbox en la sesión.
+- Marcadores con miniaturas y nombres de las fotos renderizados por Mapbox.
+  Tocar una miniatura del mapa abre la foto con su nombre completo.
+- Borrado confirmado: desaparecen fotos de lista y marcadores de fotos,
+  contador en cero y ambas imágenes todavía presentes en MediaStore.
+- Sin excepciones de AndroidRuntime detectadas durante estas pruebas.
+
+ALCANCE DE LA PRUEBA DE MAPBOX
+El estudiante pidió dejar el token configurable sin incluir uno.
+No se usó el token del repositorio ni el del APK de demostración.
+Para revisar la vista y las miniaturas se introdujo sólo una cadena de
+prueba deliberadamente inválida en la sesión del emulador. Esa cadena no
+está en los fuentes ni en el APK. Se mostró el aviso de conexión/token
+inválido sin cerrar la aplicación.
+
+NO se validaron la descarga de cartografía real ni la línea sobre un mapa
+con estilo cargado y token válido. Requiere introducir el token público de
+la cuenta del estudiante y disponer de conexión a Internet.
+La captura 07 muestra marcadores sobre fondo sin cartografía: no representa
+una prueba satisfactoria de carga del mapa base.
+
+VERSIONES Y MATERIAL
+CameraX 1.6.0, Mapbox Android/Compose 11.31.1, Accompanist 0.37.3,
+Play Services Location 21.4.0.
+Mapbox 11.31.1 fue autorizada por el estudiante y coincide con el archivo
+09-Mapas/maps/gradle/libs.versions.toml del ZIP de ejemplos recibido.
+La versión 11.31.11 del enunciado devolvió HTTP 404 en los repositorios.
+
+Se revisaron los PDF, ejemplos_clase-main.zip, las imágenes y características
+del APK demo. LEEME.txt relaciona la solución con el material entregado.

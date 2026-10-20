@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="RutaFoto - prueba de emulador" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>Prueba de recorrido simulado</name><trkseg>
+<trkpt lat="4.627389" lon="-74.064163"><ele>2600</ele><time>2026-10-19T15:00:00Z</time></trkpt>
+<trkpt lat="4.627479" lon="-74.064128"><ele>2600</ele><time>2026-10-19T15:00:05Z</time></trkpt>
+<trkpt lat="4.627569" lon="-74.064093"><ele>2600</ele><time>2026-10-19T15:00:10Z</time></trkpt>
+<trkpt lat="4.627659" lon="-74.064058"><ele>2600</ele><time>2026-10-19T15:00:15Z</time></trkpt>
+<trkpt lat="4.627749" lon="-74.064023"><ele>2600</ele><time>2026-10-19T15:00:20Z</time></trkpt>
+<trkpt lat="4.627839" lon="-74.063988"><ele>2600</ele><time>2026-10-19T15:00:25Z</time></trkpt>
+<trkpt lat="4.627929" lon="-74.063953"><ele>2600</ele><time>2026-10-19T15:00:30Z</time></trkpt>
+<trkpt lat="4.628019" lon="-74.063918"><ele>2600</ele><time>2026-10-19T15:00:35Z</time></trkpt>
+<trkpt lat="4.628109" lon="-74.063883"><ele>2600</ele><time>2026-10-19T15:00:40Z</time></trkpt>
+<trkpt lat="4.628199" lon="-74.063848"><ele>2600</ele><time>2026-10-19T15:00:45Z</time></trkpt>
+<trkpt lat="4.628289" lon="-74.063813"><ele>2600</ele><time>2026-10-19T15:00:50Z</time></trkpt>
+<trkpt lat="4.628379" lon="-74.063778"><ele>2600</ele><time>2026-10-19T15:00:55Z</time></trkpt>
+<trkpt lat="4.628469" lon="-74.063743"><ele>2600</ele><time>2026-10-19T15:01:00Z</time></trkpt>
+<trkpt lat="4.628559" lon="-74.063708"><ele>2600</ele><time>2026-10-19T15:01:05Z</time></trkpt>
+<trkpt lat="4.628649" lon="-74.063673"><ele>2600</ele><time>2026-10-19T15:01:10Z</time></trkpt>
+<trkpt lat="4.628739" lon="-74.063638"><ele>2600</ele><time>2026-10-19T15:01:15Z</time></trkpt>
+<trkpt lat="4.628829" lon="-74.063603"><ele>2600</ele><time>2026-10-19T15:01:20Z</time></trkpt>
+<trkpt lat="4.628919" lon="-74.063568"><ele>2600</ele><time>2026-10-19T15:01:25Z</time></trkpt>
+<trkpt lat="4.629009" lon="-74.063533"><ele>2600</ele><time>2026-10-19T15:01:30Z</time></trkpt>
+<trkpt lat="4.629099" lon="-74.063498"><ele>2600</ele><time>2026-10-19T15:01:35Z</time></trkpt>
+</trkseg></trk></gpx>
