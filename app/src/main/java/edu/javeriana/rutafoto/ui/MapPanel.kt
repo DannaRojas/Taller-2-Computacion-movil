@@ -104,11 +104,11 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             }
                             if (model.points.size >= 2) PolylineAnnotation(
                                 points = model.points.map { Point.fromLngLat(it.longitude, it.latitude) }
-                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFB94B1A); lineWidth = 5.0 }
+                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFA83B65); lineWidth = 5.0 }
                             location?.let {
                                 Marker(point = Point.fromLngLat(it.longitude, it.latitude),
                                     text = "",
-                                    color = MaterialTheme.colorScheme.primary)
+                                    color = MaterialTheme.colorScheme.primary, stroke = null)
                             }
                             model.photos.forEach { photo ->
                                 key(photo.name) {

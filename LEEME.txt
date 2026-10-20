@@ -256,3 +256,9 @@ Iniciar y Borrar aparecen juntos debajo del mapa; Borrar pide confirmacion.
 El marcador de ubicacion ya no muestra texto grande sobre las fotos.
 Las miniaturas del mapa son mas pequenas y muestran el nombre resumido;
 al abrirlas, el visor conserva el nombre completo.
+
+ACTUALIZACION 1.5 - COLORES ROSADOS
+
+Fondo rosa muy claro, paneles blancos, botones rosa oscuro y bordes rosa
+suave. El icono de la app y la linea del recorrido usan la misma paleta.
+Se mantiene la tipografia serif y la distribucion sencilla de la 1.4.

@@ -46,17 +46,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme(typography = RutaFotoTypography, colorScheme = lightColorScheme(
-                primary = Color(0xFF172D48), onPrimary = Color.White,
-                primaryContainer = Color(0xFFE4EDF8), onPrimaryContainer = Color(0xFF172D48),
-                secondary = Color(0xFFB94B1A), onSecondary = Color.White,
-                secondaryContainer = Color(0xFFFFE8D8), onSecondaryContainer = Color(0xFF71300E),
-                tertiary = Color(0xFF286977), onTertiary = Color.White,
-                background = Color(0xFFF6F2EB), onBackground = Color(0xFF172D48),
-                surface = Color.White, onSurface = Color(0xFF172D48),
-                surfaceVariant = Color(0xFFEDF1F6), onSurfaceVariant = Color(0xFF526176),
-                surfaceContainer = Color(0xFFF0F3F7), surfaceContainerHighest = Color(0xFFE6ECF3),
-                surfaceContainerLow = Color.White, surfaceContainerHigh = Color(0xFFF0F3F7),
-                outline = Color(0xFF9BAABA), outlineVariant = Color(0xFFDCE3EC)
+                primary = Color(0xFFA83B65), onPrimary = Color.White,
+                primaryContainer = Color(0xFFF9DEEA), onPrimaryContainer = Color(0xFF74304D),
+                secondary = Color(0xFFA83B65), onSecondary = Color.White,
+                secondaryContainer = Color(0xFFFCE4EE), onSecondaryContainer = Color(0xFF74304D),
+                tertiary = Color(0xFF8A526A), onTertiary = Color.White,
+                background = Color(0xFFFFF7FA), onBackground = Color(0xFF49303C),
+                surface = Color.White, onSurface = Color(0xFF49303C),
+                surfaceVariant = Color(0xFFFAEEF3), onSurfaceVariant = Color(0xFF755763),
+                surfaceContainer = Color(0xFFFFF0F6), surfaceContainerHighest = Color(0xFFF6E3EB),
+                surfaceContainerLow = Color.White, surfaceContainerHigh = Color(0xFFFAEEF3),
+                outline = Color(0xFFC49BAC), outlineVariant = Color(0xFFE8CCD8)
             )) { RouteScreen() }
         }
     }

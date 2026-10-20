@@ -1,3 +1,14 @@
+ACTUALIZACION 1.5 - PALETA ROSADA - 20 DE OCTUBRE DE 2026
+
+assembleDebug y lintDebug correctos: 0 errores y 12 advertencias.
+APK version 1.5/versionCode 6. Cambios de presentacion: fondo rosa claro,
+botones rosa oscuro, bordes suaves, icono y marcador de ubicacion rosados.
+Se mantiene la fuente serif y la estructura sencilla de la version 1.4.
+Revision visual en Pixel 10 Pro Fold: mapa, ubicacion y camara visibles.
+Captura: validacion/rosa-v1.5/abierto.png.
+No se repitieron pruebas funcionales para este cambio de colores.
+El token se configuro solo en la sesion, sin incluirlo en fuentes o APK.
+
 ACTUALIZACION 1.4 - INTERFAZ SENCILLA - 20 DE OCTUBRE DE 2026
 
 assembleDebug y lintDebug correctos: 0 errores y 12 advertencias.

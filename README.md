@@ -92,13 +92,13 @@ La versión 1.2 se probó en Pixel 10 Pro Fold con seis pruebas en cada pantalla
 CameraX usa `ImplementationMode.EMBEDDED` para respetar el recorte al plegar.
 El APK y los archivos generados por Gradle están excluidos de Git.
 
-## Interfaz sencilla — versión 1.4
+## Interfaz sencilla — versión 1.5
 
 Letra serif del dispositivo, títulos cortos y dos paneles: Recorrido y Cámara.
 El recorrido tiene botones con texto: Iniciar/Pausar/Continuar y Borrar.
 El mapa muestra la ubicación sin el rótulo grande que tapaba los marcadores.
 Las miniaturas del mapa son compactas y abren la foto con su nombre completo.
 La cabecera es un título sencillo; se quitaron el banner y los números de sección.
-Se conservan azul marino y naranja sobre un fondo claro.
+Paleta de rosas suaves: fondo rosa muy claro, paneles blancos y botones rosa oscuro.
 Con menos de 760 dp disponibles se apilan los paneles, con el mapa arriba.
 La fuente se define en `ui/RutaFotoTypography.kt`, sin añadir bibliotecas.
