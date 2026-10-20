@@ -50,17 +50,17 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             MaterialTheme(typography = RutaFotoTypography, colorScheme = darkColorScheme(
-                primary = Color(0xFFFF4FA0), onPrimary = Color(0xFF200C17),
-                primaryContainer = Color(0xFF53223D), onPrimaryContainer = Color(0xFFFFC2DF),
-                secondary = Color(0xFFFF4FA0), onSecondary = Color(0xFF200C17),
-                secondaryContainer = Color(0xFF452235), onSecondaryContainer = Color(0xFFFFB0D5),
-                tertiary = Color(0xFFF299C4), onTertiary = Color(0xFF301323),
-                background = Color.Black, onBackground = Color(0xFFF9F1F5),
-                surface = Color(0xFF171519), onSurface = Color(0xFFF9F1F5),
-                surfaceVariant = Color(0xFF282028), onSurfaceVariant = Color(0xFFD0B8C4),
-                surfaceContainer = Color(0xFF201B21), surfaceContainerHighest = Color(0xFF30232C),
-                surfaceContainerLow = Color(0xFF121014), surfaceContainerHigh = Color(0xFF282028),
-                outline = Color(0xFF99758A), outlineVariant = Color(0xFF5B3B4B)
+                primary = Color(0xFF39A9FF), onPrimary = Color(0xFF001D32),
+                primaryContainer = Color(0xFF12354D), onPrimaryContainer = Color(0xFFC5E7FF),
+                secondary = Color(0xFF31D69A), onSecondary = Color(0xFF002619),
+                secondaryContainer = Color(0xFF123D30), onSecondaryContainer = Color(0xFFB5F5D9),
+                tertiary = Color(0xFF45C9D5), onTertiary = Color(0xFF002F33),
+                background = Color.Black, onBackground = Color(0xFFF1F5F7),
+                surface = Color(0xFF121619), onSurface = Color(0xFFF1F5F7),
+                surfaceVariant = Color(0xFF20282D), onSurfaceVariant = Color(0xFFB9C7CE),
+                surfaceContainer = Color(0xFF181E22), surfaceContainerHighest = Color(0xFF283138),
+                surfaceContainerLow = Color(0xFF0D1114), surfaceContainerHigh = Color(0xFF20282D),
+                outline = Color(0xFF768991), outlineVariant = Color(0xFF34434B)
             )) { RouteScreen() }
         }
     }

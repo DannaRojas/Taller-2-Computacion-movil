@@ -78,7 +78,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
             centered = true
         }
     }
-    OutlinedCard(modifier, shape = RoundedCornerShape(12.dp),
+    Card(modifier, shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.fillMaxSize().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
@@ -112,7 +112,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                             }
                             if (model.points.size >= 2) PolylineAnnotation(
                                 points = model.points.map { Point.fromLngLat(it.longitude, it.latitude) }
-                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFFFF4FA0); lineWidth = 5.0 }
+                            ) { lineColor = androidx.compose.ui.graphics.Color(0xFF31D69A); lineWidth = 5.0 }
                             location?.let {
                                 Marker(point = Point.fromLngLat(it.longitude, it.latitude),
                                     text = "",

@@ -269,3 +269,6 @@ Fondo negro y paneles oscuros con botones fucsia intenso y texto claro.
 Nueva fuente sans-serif-condensed del dispositivo, sin descargar fuentes.
 Mapa Standard en iluminacion nocturna, sin barra de escala superpuesta.
 Se mantiene la estructura sencilla y los botones Iniciar y Borrar.
+
+
+VERSION 1.7: fondo negro, paneles sin borde, acentos azules y verdes. Se conserva la fuente condensada y el mapa nocturno.

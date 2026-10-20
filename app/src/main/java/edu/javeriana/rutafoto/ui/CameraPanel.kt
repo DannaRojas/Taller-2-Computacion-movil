@@ -106,7 +106,7 @@ fun CameraPanel(model: RouteViewModel, permissionGranted: Boolean, locationGrant
     var front by rememberSaveable { mutableStateOf(false) }
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     var cameraError by remember { mutableStateOf<Int?>(null) }
-    OutlinedCard(modifier, shape = RoundedCornerShape(12.dp),
+    Card(modifier, shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleLarge)
