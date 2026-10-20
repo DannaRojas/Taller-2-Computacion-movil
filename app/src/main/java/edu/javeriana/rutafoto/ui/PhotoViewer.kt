@@ -1,8 +1,5 @@
 package edu.javeriana.rutafoto.ui
 
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -19,12 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,36 +27,24 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import coil3.compose.AsyncImage
 import edu.javeriana.rutafoto.R
 import edu.javeriana.rutafoto.data.RoutePhoto
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
 fun PhotoViewer(photo: RoutePhoto, onClose: () -> Unit) {
-    val resolver = LocalContext.current.contentResolver
-    var loaded by remember(photo.uri) { mutableStateOf(false) }
-    val bitmap by produceState<Bitmap?>(null, photo.uri) {
-        value = withContext(Dispatchers.IO) {
-            try {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(resolver, photo.uri)) { decoder, info, _ ->
-                    val ratio = minOf(1f, 3072f / max(info.size.width, info.size.height))
-                    decoder.setTargetSize(max(1, (info.size.width * ratio).roundToInt()),
-                        max(1, (info.size.height * ratio).roundToInt()))
-                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
-                }
-            } catch (_: Exception) { null }
-        }
-        loaded = true
-    }
+    var imageSize by remember(photo.uri) { mutableStateOf(IntSize.Zero) }
+    var loadingError by remember(photo.uri) { mutableStateOf(false) }
+    val loaded = imageSize.width > 0 && imageSize.height > 0
     var scale by remember(photo.uri) { mutableFloatStateOf(1f) }
     var offset by remember(photo.uri) { mutableStateOf(Offset.Zero) }
     var frame by remember { mutableStateOf(IntSize.Zero) }
 
     fun constrain(candidate: Offset, nextScale: Float): Offset {
-        val image = bitmap ?: return Offset.Zero
+        val image = imageSize
+        if (!loaded) return Offset.Zero
         if (frame.width == 0 || frame.height == 0) return Offset.Zero
         val fit = minOf(frame.width.toFloat() / image.width, frame.height.toFloat() / image.height)
         val limitX = max(0f, (image.width * fit * nextScale - frame.width) / 2)
@@ -86,7 +69,7 @@ fun PhotoViewer(photo: RoutePhoto, onClose: () -> Unit) {
                 Box(Modifier.weight(1f).fillMaxWidth().clipToBounds().background(Color.Black)
                     .onSizeChanged { frame = it; offset = constrain(offset, scale) }
                     .testTag("photo_zoom_surface")
-                    .pointerInput(photo.uri, bitmap, frame) {
+                    .pointerInput(photo.uri, imageSize, frame) {
                         detectTransformGestures { centroid, pan, zoom, _ ->
                             val next = (scale * zoom).coerceIn(1f, 5f)
                             val ratio = next / scale
@@ -95,7 +78,7 @@ fun PhotoViewer(photo: RoutePhoto, onClose: () -> Unit) {
                             scale = next
                         }
                     }
-                    .pointerInput(photo.uri, bitmap, frame) {
+                    .pointerInput(photo.uri, imageSize, frame) {
                         detectTapGestures(onDoubleTap = { tap ->
                             if (scale > 1f) reset() else {
                                 scale = 2.5f
@@ -103,26 +86,35 @@ fun PhotoViewer(photo: RoutePhoto, onClose: () -> Unit) {
                             }
                         })
                     }, contentAlignment = Alignment.Center) {
-                    bitmap?.let { image ->
-                        Image(image.asImageBitmap(), photo.name, Modifier.fillMaxSize().graphicsLayer {
+                    AsyncImage(
+                        model = photo.uri,
+                        contentDescription = photo.name,
+                        modifier = Modifier.fillMaxSize().graphicsLayer {
                             scaleX = scale; scaleY = scale
                             translationX = offset.x; translationY = offset.y
-                        }, contentScale = ContentScale.Fit)
-                    } ?: if (loaded) Text(stringResource(R.string.photo_unavailable), color = Color.White)
-                    else CircularProgressIndicator()
+                        },
+                        contentScale = ContentScale.Fit,
+                        onSuccess = { state ->
+                            imageSize = IntSize(state.result.image.width, state.result.image.height)
+                            loadingError = false
+                        },
+                        onError = { loadingError = true }
+                    )
+                    if (loadingError) Text(stringResource(R.string.photo_unavailable), color = Color.White)
+                    else if (!loaded) CircularProgressIndicator()
                 }
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically) {
-                    FilledTonalIconButton(onClick = { changeScale(1f / 1.5f) }, enabled = bitmap != null && scale > 1f) {
+                    FilledTonalIconButton(onClick = { changeScale(1f / 1.5f) }, enabled = loaded && scale > 1f) {
                         Icon(Icons.Default.Remove, stringResource(R.string.photo_zoom_out))
                     }
                     Text(stringResource(R.string.zoom_level, (scale * 100).roundToInt()),
                         Modifier.width(88.dp).padding(horizontal = 12.dp))
-                    FilledTonalIconButton(onClick = { changeScale(1.5f) }, enabled = bitmap != null && scale < 5f) {
+                    FilledTonalIconButton(onClick = { changeScale(1.5f) }, enabled = loaded && scale < 5f) {
                         Icon(Icons.Default.Add, stringResource(R.string.photo_zoom_in))
                     }
                     Spacer(Modifier.width(12.dp))
-                    IconButton(onClick = { reset() }, enabled = bitmap != null) {
+                    IconButton(onClick = { reset() }, enabled = loaded) {
                         Icon(Icons.Default.RestartAlt, stringResource(R.string.photo_zoom_reset))
                     }
                 }

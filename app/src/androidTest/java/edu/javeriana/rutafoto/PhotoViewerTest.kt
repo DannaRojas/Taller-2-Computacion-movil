@@ -27,7 +27,9 @@ class PhotoViewerTest {
             MaterialTheme { PhotoViewer(RoutePhoto(file.name, Uri.fromFile(file), 4.6273, -74.0641)) {} }
         }
         compose.waitUntil(10_000) {
-            compose.onAllNodesWithContentDescription(file.name).fetchSemanticsNodes().isNotEmpty()
+            runCatching {
+                compose.onNodeWithContentDescription("Acercar foto").assertIsEnabled()
+            }.isSuccess
         }
     }
 

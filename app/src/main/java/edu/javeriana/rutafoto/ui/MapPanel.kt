@@ -35,7 +35,7 @@ import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleSta
 import edu.javeriana.rutafoto.R
 import edu.javeriana.rutafoto.data.RoutePhoto
 import edu.javeriana.rutafoto.data.RouteViewModel
-import java.util.Locale
+import kotlin.math.roundToInt
 
 @Composable
 @OptIn(MapboxExperimental::class)
@@ -186,7 +186,7 @@ fun MapPanel(model: RouteViewModel, permissionGranted: Boolean, precise: Boolean
                 }
                 if (!precise) Text(stringResource(R.string.approximate), style = MaterialTheme.typography.bodySmall)
                 Text(stringResource(R.string.route_summary, model.photos.size,
-                    String.format(Locale.getDefault(), "%.0f", model.distanceMeters)), style = MaterialTheme.typography.labelLarge)
+                    model.distanceMeters.roundToInt().toString()), style = MaterialTheme.typography.labelLarge)
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = { model.toggleRecording() }, modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary,

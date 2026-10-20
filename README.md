@@ -1,8 +1,7 @@
 # RutaFoto — Taller 2 de Computación móvil
 
 Aplicación Android en Kotlin y Jetpack Compose para fotografiar un recorrido.
-En pantallas amplias muestra cámara y mapa lado a lado; en pantallas estrechas,
-uno sobre otro. Incluye CameraX, Mapbox, ubicación y permisos, galería,
+Muestra el mapa arriba y la cámara debajo mediante Column y pesos. Incluye CameraX, Mapbox, ubicación y permisos, galería,
 miniaturas horizontales, marcadores fotográficos y zoom de fotos.
 
 ## Abrir y ejecutar
@@ -70,10 +69,6 @@ no hace caminar al emulador. Para eso debes reproducir posiciones.
 
 Los ejemplos originales se entregaron en `ejemplos_clase-main.zip` y los PDF
 en `compu movil conetnido clases.zip`. No se publican sus copias en este repo.
-Consulta [EXPLICACION_PROYECTO.txt](EXPLICACION_PROYECTO.txt) para la revisión
-de requisitos, archivos y funciones, con la distinción entre material de
-clase y adaptaciones propias. También están [LEEME.txt](LEEME.txt) y
-[ESTADO_VALIDACION.txt](ESTADO_VALIDACION.txt).
 
 ## Versiones y compilación
 
@@ -95,7 +90,7 @@ La versión 1.2 se probó en Pixel 10 Pro Fold con seis pruebas en cada pantalla
 CameraX usa `ImplementationMode.EMBEDDED` para respetar el recorte al plegar.
 El APK y los archivos generados por Gradle están excluidos de Git.
 
-## Interfaz sencilla — versión 1.7
+## Interfaz sencilla — versión 1.8
 
 Letra sans serif condensada del dispositivo, títulos cortos y dos paneles: Recorrido y Cámara.
 El recorrido tiene botones con texto: Iniciar/Pausar/Continuar y Borrar.
@@ -103,6 +98,23 @@ El mapa muestra la ubicación sin el rótulo grande que tapaba los marcadores.
 Las miniaturas del mapa son compactas y abren la foto con su nombre completo.
 La cabecera es un título sencillo; se quitaron el banner y los números de sección.
 Fondo negro y paneles oscuros sin bordes. Los controles usan azul y verde intenso, con textos claros y mapa nocturno. La ubicación se indica en azul y el recorrido en verde.
-Con menos de 760 dp disponibles se apilan los paneles, con el mapa arriba.
+Los paneles se apilan mediante Column y pesos, con el mapa arriba.
 La fuente se define en `ui/RutaFotoTypography.kt`, sin añadir bibliotecas.
 # codigo mapbox : [TOKEN RETIRADO: configurar en mapbox.properties, no en Git]
+
+## Adaptación a los ejemplos de clase — versión 1.8
+
+Las miniaturas y el visor utilizan `coil3.compose.AsyncImage`, como
+`07-Camara/CamApp/.../ui/components/ImageListComponent.kt`. Coil Compose
+3.6.1 es la versión declarada en ese ejemplo. Se retiraron `loadThumbnail`,
+`photoBitmap`, `produceState` e `ImageDecoder` de la carga de imágenes.
+Coil procesa las imágenes; los callbacks del visor indican carga y error.
+
+La distribución usa `Column` y pesos, contenidos de los temas de layout;
+se retiró `BoxWithConstraints`. El mapa queda arriba y la cámara debajo.
+
+Se conservan `ViewAnnotation` para el bonus de marcador fotográfico,
+`ImplementationMode.EMBEDDED` para el plegable y los gestos de zoom solicitados.
+También se conserva la validación de ubicación reciente para evitar asociar
+una captura a una posición antigua. Son adaptaciones propias; no se afirma
+que todas sus API hayan sido mostradas exactamente en clase.
