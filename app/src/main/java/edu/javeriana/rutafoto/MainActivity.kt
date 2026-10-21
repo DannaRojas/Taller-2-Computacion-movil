@@ -121,7 +121,7 @@ private fun RouteScreen(model: RouteViewModel = viewModel()) {
                 Text(stringResource(R.string.app_subtitle), style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Column(Modifier.fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)) {
                 val camera: @Composable (Modifier) -> Unit = { modifier ->
                     CameraPanel(model, cameraGranted, locationGranted, gpsEnabled,
                         permissionContent = {
@@ -136,8 +136,18 @@ private fun RouteScreen(model: RouteViewModel = viewModel()) {
                     }, onLocationSettings = { context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) },
                         onPhotoSelected = { selected = it }, modifier = modifier)
                 }
-                map(Modifier.weight(1f).fillMaxWidth())
-                camera(Modifier.weight(1.15f).fillMaxWidth())
+                if (maxWidth >= 600.dp) {
+                    // En pantallas amplias, cámara y fotos a la izquierda y mapa a la derecha.
+                    Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        camera(Modifier.weight(1f).fillMaxHeight())
+                        map(Modifier.weight(1f).fillMaxHeight())
+                    }
+                } else {
+                    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        map(Modifier.weight(1f).fillMaxWidth())
+                        camera(Modifier.weight(1.15f).fillMaxWidth())
+                    }
+                }
             }
         }
     }
